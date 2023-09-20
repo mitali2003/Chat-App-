@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watsupp App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: aliceblue;
+        }
+
+        h3 {
+            background-color: #007BFF;
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            padding: 10px;
+            margin: 0;
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .chat {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            max-width: 400px;
+            width: 100%;
+            padding: 15px;
+        }
+
+        .chat p {
+            margin: 0;
+        }
+
+        .msg {
+            background-color: #007BFF;
+            color: white;
+            border-radius: 15px;
+            padding: 10px 15px;
+            margin: 10px;
+        }
+
+        .custom-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .custom-button:hover {
+            background-color: #0056b3;
+
+        }
+
+
+        .edit-button-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .edit-button {
+            background-color: #337ab7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .edit-button:hover {
+            background-color: #286090;
+        }
+
+        .delete-button-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .delete-button {
+            background-color: #337ab7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .delete-button:hover {
+            background-color: #286090;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>All Chats</h3>
+    <br>
+    <form action="/chats/new" method="get">
+        <button class="custom-button">New Chat</button>
+    </form>
+
+    <div class="chat-container">
+        <% for (let chat of chats) { %>
+            <div class="chat">
+                <p><strong>From:</strong>
+                    <%= chat.from %>
+                </p>
+                <div class="msg">
+                    <p><strong>Message:</strong>
+                        <%= chat.message %>
+                            <form action="/chats/<%=chat._id%>/edit" method="get">
+                                <div class=" edit-button-container">
+                                    <button class="edit-button">Edit</button>
+                                </div>
+
+                            </form>
+                            <form action="/chats/<%=chat._id%>?_method=DELETE" method="post">
+                                <div class="delete-button-container">
+                                    <button class="delete-button">Delete</button>
+                                </div>
+                            </form>
+                    </p>
+                </div>
+                <p><strong>Received By:</strong>
+                    <%= chat.to %>
+                </p>
+
+                <br>
+                <p><strong>Date:</strong>
+                    <%= chat.created_at.toString().split(" ")[4]%>   
+                </p> 
+                <br>
+                <p><strong>Time:</strong>
+                    <%= chat.created_at.toString().split(" ").slice(0,4).join(" ")%>
+                </p>
+                
+
+            <br>
+            <br>
+    </div>
+    <% } %>
+        </div>
+</body>
+
+</html>
